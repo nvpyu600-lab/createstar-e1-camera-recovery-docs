@@ -4,7 +4,7 @@
 
 ## Summary
 
-After the machine-side power supply tripped during production, cutting power to the machine, E1 could remain in an endless camera-initialization loop and could not enter the normal interface. As a temporary diagnostic workaround, the application was launched repeatedly; after one stalled window was closed with `Alt+F4`, `Manual Test` was clicked repeatedly and `Coordinate Initialization` was clicked quickly before the next window entered initialization. This permitted access to the system for investigation; it was not the repair itself.
+After the machine's circuit breaker tripped during production, cutting power to the machine, E1 could remain in an endless camera-initialization loop and could not enter the normal interface. As a temporary diagnostic workaround, the application was launched repeatedly; after one stalled window was closed with `Alt+F4`, `Manual Test` was clicked repeatedly and `Coordinate Initialization` was clicked quickly before the next window entered initialization. This permitted access to the system for investigation; it was not the repair itself.
 
 Once inside E1, the upper camera worked while the lower-camera area was blank. The immediate cause was a stale device mapping in E1's SQLite configuration database:
 
@@ -19,7 +19,7 @@ The operating system still detected and streamed both USB UVC cameras at `/dev/v
 
 ## Observed Symptoms
 
-1. The machine-side power supply tripped while the machine was working, causing a sudden power loss; the failure appeared after reboot.
+1. The machine's circuit breaker tripped while the machine was working, causing a sudden power loss; the failure appeared after reboot.
 2. Using the temporary workaround, E1 could be entered, but the lower camera stayed blank.
 3. Reversing the two USB camera connections changed which physical camera appeared in the working UI position.
 4. Camera cables were disassembled and continuity-tested; both were verified good.
@@ -68,7 +68,7 @@ Platform      / Dcam / DeviceName = CN40
 
 **Confirmed direct cause:** E1's `Dcam` device mapping did not match the current Linux V4L2 device.
 
-**Most likely trigger:** the machine-side power supply tripped while the machine was running, causing the sudden shutdown and exposing a stale or rolled-back E1 setting. The SQLite database remained readable, so this record does not claim proven database corruption. The power interruption is a plausible trigger, not conclusive proof of the exact write that changed the value.
+**Most likely trigger:** the machine's circuit breaker tripped while the machine was running, causing the sudden shutdown and exposing a stale or rolled-back E1 setting. The SQLite database remained readable, so this record does not claim proven database corruption. The power interruption is a plausible trigger, not conclusive proof of the exact write that changed the value.
 
 The USB-swap observation is consistent with the diagnosis: the `Ucam` slot was fixed to `/dev/video2`, so whichever physical camera occupied that node appeared in the working UI. The `Dcam` slot remained unavailable because it still targeted `CN40`.
 
@@ -114,7 +114,7 @@ Keep the wired interface for the machine/feeder subnet and Wi-Fi for remote SSH 
 
 ## 摘要
 
-设备工作时供电侧发生跳闸，导致整机突然断电。重新启动后，E1 可能无限停留在“相机初始化”阶段，无法正常进入系统。为进入系统排查，曾采用临时绕过方式：反复启动软件，先用 `Alt+F4` 关闭一个卡住的窗口，再趁下一个窗口准备初始化前，连续点击“手动测试”，然后快速点击“坐标初始化”。该操作仅用于进入系统进行排查，并非正式修复。
+机器工作中发生空气开关跳闸，导致整机突然断电。重新启动后，E1 可能无限停留在“相机初始化”阶段，无法正常进入系统。为进入系统排查，曾采用临时绕过方式：反复启动软件，先用 `Alt+F4` 关闭一个卡住的窗口，再趁下一个窗口准备初始化前，连续点击“手动测试”，然后快速点击“坐标初始化”。该操作仅用于进入系统进行排查，并非正式修复。
 
 进入系统后，上相机正常显示，下相机区域空白。直接原因是 E1 的 SQLite 配置数据库中保存了错误或过期的下相机设备映射：
 
@@ -129,7 +129,7 @@ Linux 仍能正常识别并采集两只 USB UVC 相机，实际视频设备为 `
 
 ## 故障现象
 
-1. 机器工作中供电侧发生跳闸，导致整机突然断电，重新开机后故障出现；
+1. 机器工作中发生空气开关跳闸，导致整机突然断电，重新开机后故障出现；
 2. 通过临时绕过可进入 E1 系统，但下相机一直空白；
 3. 交换两只相机的 USB 接口后，能显示的物理相机随 USB 设备位置变化；
 4. 已拆机并测量相机线，线路导通正常。
@@ -185,7 +185,7 @@ Platform      / Dcam / DeviceName = CN40
 
 **已确认的直接原因：** E1 中 `Dcam` 的设备映射与当前 Linux V4L2 设备不匹配。
 
-**最可能的触发因素：** 机器工作时供电侧发生跳闸，导致整机突然断电，使旧配置、未正常保存的配置或回退后的配置重新生效。`setting.db` 仍然可以读取，因此本文不把它定性为已证实的数据库结构损坏；断电是高度相关的触发因素，但不是已被完全证明的唯一写入原因。
+**最可能的触发因素：** 机器工作时发生空气开关跳闸，导致整机突然断电，使旧配置、未正常保存的配置或回退后的配置重新生效。`setting.db` 仍然可以读取，因此本文不把它定性为已证实的数据库结构损坏；断电是高度相关的触发因素，但不是已被完全证明的唯一写入原因。
 
 交换 USB 后画面随之变化，也与该结论相符：`Ucam` 固定使用 `/dev/video2`，哪只物理相机位于该节点就显示在哪个可用画面中；`Dcam` 则始终因仍指向 `CN40` 而不可用。
 
