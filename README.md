@@ -98,10 +98,6 @@ Dcam|/dev/video0
 
 Restart E1. A successful repair should produce two successful camera initialization entries, one for `/dev/video2` and one for `/dev/video0`.
 
-## Evidence of Successful System Entry
-
-The following two images were captured after the temporary workaround successfully entered E1. They show the camera initialization and coordinate initialization screens; they are evidence of successful system entry, not additional fault symptoms.
-
 ![Figure 2 – E1 successfully entered the system and displayed the camera initialization screen](images/02-camera-initialization-stuck.jpg)
 
 ![Figure 3 – E1 successfully entered the system and displayed the coordinate initialization screen](images/03-after-camera-initialization.jpg)
@@ -220,10 +216,6 @@ Dcam|/dev/video0
 ```
 
 重新启动 E1 后，应看到 `/dev/video2` 与 `/dev/video0` 两路相机初始化成功。
-
-## 成功进入系统的证据
-
-以下两张图片均是在通过临时绕过成功进入 E1 后拍摄的，分别显示相机初始化和坐标初始化界面；它们用于证明成功进入系统，不属于故障现象。
 
 ![图 2：成功进入 E1 后显示相机初始化界面](images/02-camera-initialization-stuck.jpg)
 

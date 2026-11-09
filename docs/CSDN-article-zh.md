@@ -91,10 +91,6 @@ Dcam|/dev/video0
 
 重新打开 E1 后，日志应出现两路相机初始化成功的记录。
 
-## 成功进入系统的证据
-
-以下两张图片均是在通过临时绕过成功进入 E1 后拍摄的，分别显示相机初始化和坐标初始化界面；它们用于证明成功进入系统，不属于故障现象。
-
 ![图 2：成功进入 E1 后显示相机初始化界面](../images/02-camera-initialization-stuck.jpg)
 
 ![图 3：成功进入 E1 后显示坐标初始化界面](../images/03-after-camera-initialization.jpg)
