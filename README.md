@@ -24,9 +24,9 @@ The operating system still detected and streamed both USB UVC cameras at `/dev/v
 3. Reversing the two USB camera connections changed which physical camera appeared in the working UI position.
 4. Camera cables were disassembled and continuity-tested; both were verified good.
 
-![Figure 2 – The application stalled during camera initialization](images/02-camera-initialization-stuck.jpg)
+![Figure 2 – E1 successfully entered the system and displayed the camera initialization screen](images/02-camera-initialization-stuck.jpg)
 
-![Figure 3 – The system continued past camera initialization after the repair](images/03-after-camera-initialization.jpg)
+![Figure 3 – E1 successfully entered the system and displayed the coordinate initialization screen](images/03-after-camera-initialization.jpg)
 
 ## Investigation
 
@@ -136,9 +136,9 @@ Linux 仍能正常识别并采集两只 USB UVC 相机，实际视频设备为 `
 3. 交换两只相机的 USB 接口后，能显示的物理相机随 USB 设备位置变化；
 4. 已拆机并测量相机线，线路导通正常。
 
-![图 2：系统卡在相机初始化阶段](images/02-camera-initialization-stuck.jpg)
+![图 2：成功进入 E1 后显示相机初始化界面](images/02-camera-initialization-stuck.jpg)
 
-![图 3：修复后系统通过相机初始化，继续后续初始化](images/03-after-camera-initialization.jpg)
+![图 3：成功进入 E1 后显示坐标初始化界面](images/03-after-camera-initialization.jpg)
 
 ## 调查过程
 

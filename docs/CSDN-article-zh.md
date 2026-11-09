@@ -16,9 +16,9 @@
 - 两只相机均能被树莓派识别；
 - 两只相机均可通过 V4L2 单独采集画面。
 
-![图 2：系统卡在相机初始化阶段](../images/02-camera-initialization-stuck.jpg)
+![图 2：成功进入 E1 后显示相机初始化界面](../images/02-camera-initialization-stuck.jpg)
 
-![图 3：修复后系统通过相机初始化并进入后续初始化](../images/03-after-camera-initialization.jpg)
+![图 3：成功进入 E1 后显示坐标初始化界面](../images/03-after-camera-initialization.jpg)
 
 ## 二、V4L2 检查结果：硬件与驱动正常
 
