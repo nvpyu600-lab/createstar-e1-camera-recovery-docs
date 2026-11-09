@@ -24,10 +24,6 @@ The operating system still detected and streamed both USB UVC cameras at `/dev/v
 3. Reversing the two USB camera connections changed which physical camera appeared in the working UI position.
 4. Camera cables were disassembled and continuity-tested; both were verified good.
 
-![Figure 2 – E1 successfully entered the system and displayed the camera initialization screen](images/02-camera-initialization-stuck.jpg)
-
-![Figure 3 – E1 successfully entered the system and displayed the coordinate initialization screen](images/03-after-camera-initialization.jpg)
-
 ## Investigation
 
 ### 1. Hardware and driver checks
@@ -102,6 +98,14 @@ Dcam|/dev/video0
 
 Restart E1. A successful repair should produce two successful camera initialization entries, one for `/dev/video2` and one for `/dev/video0`.
 
+## Evidence of Successful System Entry
+
+The following two images were captured after the temporary workaround successfully entered E1. They show the camera initialization and coordinate initialization screens; they are evidence of successful system entry, not additional fault symptoms.
+
+![Figure 2 – E1 successfully entered the system and displayed the camera initialization screen](images/02-camera-initialization-stuck.jpg)
+
+![Figure 3 – E1 successfully entered the system and displayed the coordinate initialization screen](images/03-after-camera-initialization.jpg)
+
 ## Separate Feeder-Network Issue
 
 The same recovery also exposed a separate E1 feeder-network configuration issue. E1 initially reported a failed local bind and socket initialization. After the Raspberry Pi's wired machine-network address was restored and the feeder endpoint became reachable, the log changed to a successful bind and connected socket state.
@@ -135,10 +139,6 @@ Linux 仍能正常识别并采集两只 USB UVC 相机，实际视频设备为 `
 2. 通过临时绕过可进入 E1 系统，但下相机一直空白；
 3. 交换两只相机的 USB 接口后，能显示的物理相机随 USB 设备位置变化；
 4. 已拆机并测量相机线，线路导通正常。
-
-![图 2：成功进入 E1 后显示相机初始化界面](images/02-camera-initialization-stuck.jpg)
-
-![图 3：成功进入 E1 后显示坐标初始化界面](images/03-after-camera-initialization.jpg)
 
 ## 调查过程
 
@@ -220,6 +220,14 @@ Dcam|/dev/video0
 ```
 
 重新启动 E1 后，应看到 `/dev/video2` 与 `/dev/video0` 两路相机初始化成功。
+
+## 成功进入系统的证据
+
+以下两张图片均是在通过临时绕过成功进入 E1 后拍摄的，分别显示相机初始化和坐标初始化界面；它们用于证明成功进入系统，不属于故障现象。
+
+![图 2：成功进入 E1 后显示相机初始化界面](images/02-camera-initialization-stuck.jpg)
+
+![图 3：成功进入 E1 后显示坐标初始化界面](images/03-after-camera-initialization.jpg)
 
 ## 独立的料站网络问题
 
