@@ -1,10 +1,12 @@
-# E1 Pick-and-Place Camera Initialization Recovery
+# Createstar E1 Infinite Camera Initialization Recovery
 
-[中文说明在下方](#创思达-e1-贴片机相机初始化修复)
+[中文说明在下方](#创思达-e1-贴片机无限相机初始化修复)
 
 ## Summary
 
-After an unexpected power loss during production, the machine rebooted into the E1 application with a working upper camera and a blank lower-camera area. The immediate cause was a stale device mapping in E1's SQLite configuration database:
+After an unexpected power loss during production, E1 could remain in an endless camera-initialization loop and could not enter the normal interface. As a temporary diagnostic workaround, the application was launched repeatedly; after one stalled window was closed with `Alt+F4`, `Manual Test` was clicked repeatedly and `Coordinate Initialization` was clicked quickly before the next window entered initialization. This permitted access to the system for investigation; it was not the repair itself.
+
+Once inside E1, the upper camera worked while the lower-camera area was blank. The immediate cause was a stale device mapping in E1's SQLite configuration database:
 
 ```text
 Ucam = /dev/video2    # opened successfully
@@ -18,10 +20,9 @@ The operating system still detected and streamed both USB UVC cameras at `/dev/v
 ## Observed Symptoms
 
 1. The failure appeared immediately after an unexpected power loss while the machine was working.
-2. The E1 application entered the system, but the lower camera stayed blank.
+2. Using the temporary workaround, E1 could be entered, but the lower camera stayed blank.
 3. Reversing the two USB camera connections changed which physical camera appeared in the working UI position.
 4. Camera cables were disassembled and continuity-tested; both were verified good.
-5. Two Raspberry Pi carrier/through-hole boards were tested, with the same symptom.
 
 ![Figure 2 – The application stalled during camera initialization](images/02-camera-initialization-stuck.jpg)
 
@@ -33,7 +34,7 @@ The operating system still detected and streamed both USB UVC cameras at `/dev/v
 
 Linux detected two HK 5M CAM USB devices through `uvcvideo`. V4L2 inspection showed that `/dev/video0` and `/dev/video2` were the actual video-capture nodes; `/dev/video1` and `/dev/video3` were metadata nodes.
 
-Both capture nodes reported `Video Capture`, `Streaming`, and `Camera 1: ok`. Independent V4L2 stream tests succeeded for both cameras. This ruled out a failed camera module, a disconnected camera cable, a missing UVC driver, and the tested Raspberry Pi board hardware.
+Both capture nodes reported `Video Capture`, `Streaming`, and `Camera 1: ok`. Independent V4L2 stream tests succeeded for both cameras. This ruled out a failed camera module, a disconnected camera cable, and a missing UVC driver.
 
 ### 2. E1 startup log
 
@@ -109,11 +110,13 @@ Keep the wired interface for the machine/feeder subnet and Wi-Fi for remote SSH 
 
 ---
 
-# 创思达 E1 贴片机相机初始化修复
+# 创思达 E1 贴片机无限相机初始化修复
 
 ## 摘要
 
-设备在工作中突然断电后重新启动。E1 系统可以进入，上相机正常显示，下相机区域空白。直接原因是 E1 的 SQLite 配置数据库中保存了错误或过期的下相机设备映射：
+设备在工作中突然断电后重新启动，E1 可能无限停留在“相机初始化”阶段，无法正常进入系统。为进入系统排查，曾采用临时绕过方式：反复启动软件，先用 `Alt+F4` 关闭一个卡住的窗口，再趁下一个窗口准备初始化前，连续点击“手动测试”，然后快速点击“坐标初始化”。该操作仅用于进入系统进行排查，并非正式修复。
+
+进入系统后，上相机正常显示，下相机区域空白。直接原因是 E1 的 SQLite 配置数据库中保存了错误或过期的下相机设备映射：
 
 ```text
 Ucam = /dev/video2    # 能正常打开
@@ -127,10 +130,9 @@ Linux 仍能正常识别并采集两只 USB UVC 相机，实际视频设备为 `
 ## 故障现象
 
 1. 机器工作中突然断电，重新开机后故障出现；
-2. E1 可以进入系统，但下相机一直空白；
+2. 通过临时绕过可进入 E1 系统，但下相机一直空白；
 3. 交换两只相机的 USB 接口后，能显示的物理相机随 USB 设备位置变化；
-4. 已拆机并测量相机线，线路导通正常；
-5. 已更换两块树莓派盲孔板测试，现象没有变化。
+4. 已拆机并测量相机线，线路导通正常。
 
 ![图 2：系统卡在相机初始化阶段](images/02-camera-initialization-stuck.jpg)
 
@@ -149,7 +151,7 @@ Linux 仍能正常识别并采集两只 USB UVC 相机，实际视频设备为 `
 /dev/video3  元数据节点，不用于显示图像
 ```
 
-`/dev/video0` 与 `/dev/video2` 都具有 `Video Capture`、`Streaming` 和 `Camera 1: ok`，并且两路独立流测试均成功。因此可排除相机模块、相机线、UVC 驱动及已测试树莓派板卡的硬件故障。
+`/dev/video0` 与 `/dev/video2` 都具有 `Video Capture`、`Streaming` 和 `Camera 1: ok`，并且两路独立流测试均成功。因此可排除相机模块、相机线与 UVC 驱动故障。
 
 ### 2. E1 启动日志
 
